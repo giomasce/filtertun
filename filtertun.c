@@ -1,4 +1,19 @@
 
+/*
+ * Filter TUN - Simple program using a TAP interface to tweak around
+ * with Ethernet packets in a strange network setup
+ *
+ * Copyright © 2016 Giovanni Mascellani <gio@debian.org>
+ *
+ * My contributions are under the terms of the GNU General Public
+ * License, version 3 or later. See http://www.gnu.org/licenses/.
+ *
+ * Some stuff was taken from:
+ *  * https://gist.github.com/austinmarton/1922600
+ *  * https://gist.github.com/austinmarton/2862515
+ *  * http://backreference.org/2010/03/26/tuntap-interface-tutorial/
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
