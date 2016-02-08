@@ -124,6 +124,7 @@ void recv_eth_packet(int sock_fd) {
   if ((tun_queue_back + 1) % QUEUE_LENGTH == tun_queue_front) {
     ret = recvfrom(sock_fd, NULL, 0, MSG_TRUNC, NULL, NULL);
     check_ret(ret == -1, "recvfrom to discard");
+    fprintf(stderr, "Dropped packet because of full queue\n");
     return;
   }
 
@@ -155,7 +156,7 @@ void recv_eth_packet(int sock_fd) {
 
 int main(int argc, char **argv) {
 
-  char *if_name = "wlan0";
+  char *if_name = "eth0";
   char outer_mac[MAC_LENGTH];
 
   int recv_sock_fd = create_eth_recv_socket(if_name);
@@ -189,6 +190,7 @@ int main(int argc, char **argv) {
     int ret = select(nfds, &rfds, &wfds, NULL, &timeout);
     check_ret(ret == -1, "select");
 
+    // Call relevant handling routine
     if (FD_ISSET(recv_sock_fd, &rfds)) {
       recv_eth_packet(recv_sock_fd);
     }
